@@ -1,0 +1,8 @@
+.action-btn{
+    background: transparent;
+    border: none;
+}
+.action-btn:focus{
+    border: none;
+    outline: none !important;
+}

@@ -1,8 +1,9 @@
 import React from "react";
 import Header from "./components/Header";
-import { BrowserRouter as Router, Route } from "react-router-dom";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import AddJokes from "./components/AddJokes";
 import HomePage from "./pages/HomePage";
+import SingleJoke from "./pages/SingleJoke";
 
 const App: React.FC = () => {
   return (
@@ -10,8 +11,11 @@ const App: React.FC = () => {
       <Header />
       <main className="py-3">
         <div className="container">
-          <Route path="/jokes/add" component={AddJokes} />
-          <Route path="/" component={HomePage} exact />
+          <Switch>
+            <Route path="/jokes/add" component={AddJokes} />
+            <Route path="/jokes/:id" component={SingleJoke} />
+            <Route path="/" component={HomePage} exact />
+          </Switch>
         </div>
       </main>
     </Router>

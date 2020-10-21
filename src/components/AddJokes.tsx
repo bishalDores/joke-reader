@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { v4 as uuidv4 } from "uuid";
+import { useHistory } from "react-router";
 
-interface IJokeArray {
+export interface IJokeArray {
   category: string;
   type: string;
   flags: string[];
@@ -10,6 +11,7 @@ interface IJokeArray {
   id: string;
 }
 const AddJokes: React.FC = () => {
+  const history = useHistory();
   const [category, setCategory] = useState<string>("miscellaneous");
   const [type, setType] = useState<string>("single");
   const [flags, setFlags] = useState<string[]>([]);
@@ -25,17 +27,13 @@ const AddJokes: React.FC = () => {
     tempArray.push(data);
     setJokes(tempArray);
     localStorage.setItem("jokes", JSON.stringify(tempArray));
-
-    // setCategory("miscellaneous");
-    // setType("single");
-    // setFlags([]);
-    // setDelivery("");
-    // setContent("");
+    history.push("/");
   };
   useEffect(() => {
     // @ts-ignore
-      const data = localStorage.getItem("jokes") ? JSON.parse(localStorage.getItem("jokes")) : [];
-    setJokes(data);
+    const data = JSON.parse(localStorage.getItem("jokes"));
+
+    setJokes(data ? data : []);
   }, []);
   return (
     <div>
