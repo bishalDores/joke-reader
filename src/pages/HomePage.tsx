@@ -61,9 +61,36 @@ const HomePage: React.FC = () => {
                   <td>{joke.category}</td>
                   <td>
                     {joke.flags
-                      ? joke.flags.map((flag, index) => (
-                          <span key={index}>{flag} </span>
-                        ))
+                      ? joke.flags.map((flag, index) => {
+                          console.log(flag);
+                          return (
+                            <span key={index}>
+                              {flag === "nsfw" ? (
+                                <img
+                                  src="https://icon-library.com/images/nsfw-icon/nsfw-icon-13.jpg"
+                                  style={{ width: "50px" }}
+                                />
+                              ) : flag === "religious" ? (
+                                <i
+                                  className="fas fa-church"
+                                  style={{ fontSize: "30px" }}
+                                />
+                              ) : flag === "political" ? (
+                                <i
+                                  className="fas fa-democrat"
+                                  style={{ fontSize: "30px" }}
+                                />
+                              ) : flag === "racist" ? (
+                                <i
+                                  className="fas fa-not-equal"
+                                  style={{ fontSize: "30px" }}
+                                />
+                              ) : (
+                                ""
+                              )}{" "}
+                            </span>
+                          );
+                        })
                       : ""}
                   </td>
                   <td>
