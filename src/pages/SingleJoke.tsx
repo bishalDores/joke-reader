@@ -39,7 +39,6 @@ const SingleJoke: React.FC = () => {
       }
     );
   }, []);
-  console.log(joke);
   return (
     <div className="jumbotron">
       <h3>{joke.content}</h3>

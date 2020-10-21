@@ -18,26 +18,67 @@ const AddJokes: React.FC = () => {
   const [content, setContent] = useState<string>("");
   const [delivery, setDelivery] = useState<string>("");
   const [jokes, setJokes] = useState<IJokeArray[]>([]);
+  const [isEdit, setIsEdit] = useState<boolean>(false);
+  const [jokeId, setJokeId] = useState<string>("");
+  const [editedJokes, setEditedJokes] = useState<IJokeArray[]>([]);
 
   const submitHandler = (e: any) => {
     e.preventDefault();
-    const id = uuidv4();
-    const data = { id, category, type, flags, content, delivery };
-    const tempArray = [...jokes];
-    tempArray.push(data);
-    setJokes(tempArray);
-    localStorage.setItem("jokes", JSON.stringify(tempArray));
-    history.push("/");
+    if (isEdit) {
+      let tempSecArr = [...editedJokes];
+      const id = uuidv4();
+      const data = { id, category, type, flags, content, delivery };
+      const tempArray = [...tempSecArr];
+      tempArray.push(data);
+      setJokes(tempArray);
+      localStorage.setItem("jokes", JSON.stringify(tempArray));
+      history.push("/");
+    } else {
+      const id = uuidv4();
+      const data = { id, category, type, flags, content, delivery };
+      const tempArray = [...jokes];
+      tempArray.push(data);
+      setJokes(tempArray);
+      localStorage.setItem("jokes", JSON.stringify(tempArray));
+      history.push("/");
+    }
   };
   useEffect(() => {
     // @ts-ignore
     const data = JSON.parse(localStorage.getItem("jokes"));
-
     setJokes(data ? data : []);
+    const edit = history.location.pathname.split("/")[3] === "edit";
+    const jokeId = history.location.pathname.split("/")[2];
+    if (edit) {
+      setIsEdit(true);
+      data.forEach(
+        (d: {
+          id: string;
+          category: string;
+          flags: [];
+          content: string;
+          delivery: string;
+          type: string;
+        }) => {
+          if (d.id === jokeId) {
+            setCategory(d.category);
+            setType(d.type);
+            setContent(d.content);
+            setDelivery(d.delivery);
+            setFlags(d.flags);
+            setJokeId(d.id);
+          }
+        }
+      );
+      let arr = [...data];
+      arr = arr.filter((item) => item.id !== jokeId);
+      setEditedJokes(arr);
+    }
   }, []);
+
   return (
     <div>
-      <h2>Add New Joke</h2>
+      <h2>{isEdit ? "Edit Joke" : "Add New Joke"}</h2>
       <form onSubmit={submitHandler}>
         <div className="form-group">
           <label htmlFor="category">Category</label>
@@ -74,8 +115,10 @@ const AddJokes: React.FC = () => {
               type="checkbox"
               id="inlineCheckbox1"
               value="nsfw"
+              checked={flags.some((flag) => flag === "nsfw")}
               onChange={(e) => {
                 const { value, checked } = e.target;
+
                 if (checked) {
                   setFlags([...flags, value]);
                 } else {
@@ -95,6 +138,7 @@ const AddJokes: React.FC = () => {
               type="checkbox"
               id="inlineCheckbox2"
               value="religious"
+              checked={flags.some((flag) => flag === "religious")}
               onChange={(e) => {
                 const { value, checked } = e.target;
                 if (checked) {
@@ -116,6 +160,7 @@ const AddJokes: React.FC = () => {
               type="checkbox"
               id="inlineCheckbox3"
               value="political"
+              checked={flags.some((flag) => flag === "political")}
               onChange={(e) => {
                 const { value, checked } = e.target;
                 if (checked) {
@@ -137,6 +182,7 @@ const AddJokes: React.FC = () => {
               type="checkbox"
               id="inlineCheckbox3"
               value="racist"
+              checked={flags.some((flag) => flag === "racist")}
               onChange={(e) => {
                 const { value, checked } = e.target;
                 if (checked) {
@@ -176,7 +222,7 @@ const AddJokes: React.FC = () => {
           ""
         )}
         <button className="btn btn-info" type="submit">
-          Add Joke
+          {isEdit ? "Edit Joke" : "Add Joke"}
         </button>
       </form>
     </div>

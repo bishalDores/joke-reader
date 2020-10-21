@@ -55,14 +55,20 @@ const HomePage: React.FC = () => {
                   </td>
                   <td>
                     <div className="d-flex">
-                      <button className="action-btn">
+                      <button
+                        className="action-btn"
+                        onClick={() => history.push(`/jokes/${joke.id}/edit`)}
+                      >
                         <i
                           className="fa fa-info-circle mr-2"
                           aria-hidden="true"
                         />
                       </button>
 
-                      <button className="action-btn" onClick={()=> history.push(`/jokes/${joke.id}`)}>
+                      <button
+                        className="action-btn"
+                        onClick={() => history.push(`/jokes/${joke.id}`)}
+                      >
                         <i
                           className="fa fa-chevron-circle-right"
                           aria-hidden="true"

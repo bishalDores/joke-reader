@@ -13,6 +13,7 @@ const App: React.FC = () => {
         <div className="container">
           <Switch>
             <Route path="/jokes/add" component={AddJokes} />
+            <Route path="/jokes/:id/edit" component={AddJokes} />
             <Route path="/jokes/:id" component={SingleJoke} />
             <Route path="/" component={HomePage} exact />
           </Switch>
