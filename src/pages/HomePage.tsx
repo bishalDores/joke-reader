@@ -1,10 +1,13 @@
 import React, { useState, useEffect } from "react";
 import { useHistory } from "react-router";
 import { IJokeArray } from "../components/AddJokes";
+import Pagination from "../components/Pagination";
 
 const HomePage: React.FC = () => {
   const history = useHistory();
   const [jokes, setJokes] = useState<IJokeArray[]>([]);
+  const [currentPage, setCurrentPage] = useState<number>(1);
+  const [jokesPerPage] = useState<number>(5);
 
   useEffect(() => {
     // @ts-ignore
@@ -16,13 +19,23 @@ const HomePage: React.FC = () => {
   const addNewJoke = () => {
     history.push("/jokes/add");
   };
+  const indexOfLastJoke = currentPage * jokesPerPage;
+  const indexOfFirstJoke = indexOfLastJoke - jokesPerPage;
+  let currentJokes = [...jokes];
+  currentJokes = currentJokes.slice(indexOfFirstJoke, indexOfLastJoke);
+
+  const paginate = (pageNumber: number) => setCurrentPage(pageNumber);
+
   return (
     <>
       <div className="top-btns d-flex justify-content-end">
         <button className="btn btn-primary mr-2" onClick={addNewJoke}>
           <i className="fa fa-plus" aria-hidden="true" /> Add New Joke
         </button>
-        <button className="btn btn-primary">
+        <button
+          className="btn btn-primary"
+          onClick={() => history.push("/jokes/play")}
+        >
           <i className="fa fa-play" aria-hidden="true" /> Play Jokes
         </button>
       </div>
@@ -37,8 +50,8 @@ const HomePage: React.FC = () => {
             </tr>
           </thead>
           <tbody>
-            {jokes.length !== 0 ? (
-              jokes.map((joke) => (
+            {currentJokes.length !== 0 ? (
+              currentJokes.map((joke) => (
                 <tr key={joke.id}>
                   <td>
                     {joke.content}
@@ -83,6 +96,11 @@ const HomePage: React.FC = () => {
             )}
           </tbody>
         </table>
+        <Pagination
+          jokesPerPage={jokesPerPage}
+          totalJokes={jokes.length}
+          paginate={paginate}
+        />
       </div>
     </>
   );

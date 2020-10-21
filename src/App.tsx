@@ -4,6 +4,7 @@ import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import AddJokes from "./components/AddJokes";
 import HomePage from "./pages/HomePage";
 import SingleJoke from "./pages/SingleJoke";
+import PlayJokes from "./pages/PlayJokes";
 
 const App: React.FC = () => {
   return (
@@ -14,6 +15,7 @@ const App: React.FC = () => {
           <Switch>
             <Route path="/jokes/add" component={AddJokes} />
             <Route path="/jokes/:id/edit" component={AddJokes} />
+            <Route path="/jokes/play" component={PlayJokes} />
             <Route path="/jokes/:id" component={SingleJoke} />
             <Route path="/" component={HomePage} exact />
           </Switch>
