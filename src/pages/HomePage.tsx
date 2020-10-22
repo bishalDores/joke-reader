@@ -119,7 +119,7 @@ const HomePage: React.FC = () => {
                 </tr>
               ))
             ) : (
-              <>Loading....</>
+              <h3 className="mt-5">No Jokes Found!</h3>
             )}
           </tbody>
         </table>
