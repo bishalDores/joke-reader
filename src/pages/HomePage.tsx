@@ -68,6 +68,7 @@ const HomePage: React.FC = () => {
                               {flag === "nsfw" ? (
                                 <img
                                   src="https://icon-library.com/images/nsfw-icon/nsfw-icon-13.jpg"
+                                  alt="nsfw"
                                   style={{ width: "50px" }}
                                 />
                               ) : flag === "religious" ? (
@@ -107,7 +108,7 @@ const HomePage: React.FC = () => {
 
                       <button
                         className="action-btn"
-                        onClick={() => history.push(`/jokes/${joke.id}`)}
+                        onClick={() => history.push(`/jokes/${joke.id}/play`)}
                       >
                         <i
                           className="fa fa-chevron-circle-right"

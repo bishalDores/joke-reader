@@ -16,7 +16,7 @@ const Pagination:React.FC<IPaginate> = ({ jokesPerPage, totalJokes, paginate }) 
 
   return (
     <nav>
-      <ul className="pagination">
+      <ul className="pagination justify-content-end">
         {pageNumbers.map((number) => (
           <li key={number} className="page-item">
             <Link onClick={() => paginate(number)}  to={''} className="page-link">
