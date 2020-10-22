@@ -21,6 +21,7 @@ const AddJokes: React.FC = () => {
   const [isEdit, setIsEdit] = useState<boolean>(false);
   const [jokeId, setJokeId] = useState<string>("");
   const [editedJokes, setEditedJokes] = useState<IJokeArray[]>([]);
+  const [index, setIndex] = useState<number>(0);
 
   const submitHandler = (e: any) => {
     e.preventDefault();
@@ -29,7 +30,7 @@ const AddJokes: React.FC = () => {
       const id = uuidv4();
       const data = { id, category, type, flags, content, delivery };
       const tempArray = [...tempSecArr];
-      tempArray.push(data);
+      tempArray.splice(index, 0, data);
       setJokes(tempArray);
       localStorage.setItem("jokes", JSON.stringify(tempArray));
       history.push("/");
@@ -49,6 +50,8 @@ const AddJokes: React.FC = () => {
     setJokes(data ? data : []);
     const edit = history.location.pathname.split("/")[3] === "edit";
     const jokeId = history.location.pathname.split("/")[2];
+    const jokeIndex = data.findIndex((i: { id: string }) => i.id === jokeId);
+    setIndex(jokeIndex);
     if (edit) {
       setIsEdit(true);
       data.forEach(

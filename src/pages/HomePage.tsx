@@ -62,7 +62,6 @@ const HomePage: React.FC = () => {
                   <td>
                     {joke.flags
                       ? joke.flags.map((flag, index) => {
-                          console.log(flag);
                           return (
                             <span key={index}>
                               {flag === "nsfw" ? (
