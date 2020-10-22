@@ -50,7 +50,7 @@ const AddJokes: React.FC = () => {
     setJokes(data ? data : []);
     const edit = history.location.pathname.split("/")[3] === "edit";
     const jokeId = history.location.pathname.split("/")[2];
-    const jokeIndex = data.findIndex((i: { id: string }) => i.id === jokeId);
+    const jokeIndex = data && data.findIndex((i: { id: string }) => i.id === jokeId);
     setIndex(jokeIndex);
     if (edit) {
       setIsEdit(true);
